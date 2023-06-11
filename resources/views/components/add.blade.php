@@ -1,9 +1,9 @@
 <nav id="addBar" class="navbar navbar-light bg-light" hidden>
     <div class="container-fluid justify-content-center">
-        <form>
+        <form id="add-form" method="POST">
             <div id="addTask" class="d-flex aligns-items-center justify-content-center flex-wrap m-2">
-                <input class="form-control m-2" name="task" type="text" placeholder="Задание" required>
-                <input class="form-control m-2" name="tag" type="text" placeholder="Теги">
+                <input class="form-control m-2" name="task" placeholder="Задание" required>
+                <input class="form-control m-2" name="tags" placeholder="Теги">
                 <div class="m-3">
                     <label for="image" id="tick" hidden>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
@@ -15,10 +15,10 @@
                             <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
                         </svg>
                     </label>
-                    <input class="form-control form-control-sm" id="image" type="file" style="display:none">
+                    <input class="form-control form-control-sm" id="image" name="image" type="file" style="display:none">
                 </div>
                 <button class="btn btn-outline-dark m-2" type="submit">Добавить</button>
-                <a id="cancel" class="btn btn-outline-dark m-2" type="submit">Отмена</a>
+                <a id="cancel" class="btn btn-outline-dark m-2">Отмена</a>
             </div>
         </form>
     </div>

@@ -9,7 +9,7 @@
         </div>
         <div class="d-flex align-items-center justify-content-center">
             @auth
-                <a href="{{route('home')}}" class="btn btn-dark btn-lg">К списку</a>
+                <a href="{{route('tasks.index')}}" class="btn btn-dark btn-lg">К списку</a>
             @else
                 <a href="{{route('login')}}" class="btn btn-dark btn-lg">Войти</a>   
             @endauth

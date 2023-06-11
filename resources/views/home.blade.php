@@ -21,13 +21,10 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="list-group mb-0">
-                        <x-task-row />
-                        <x-task-row />
-                        <x-task-row />
-                        <x-task-row />
-                        <x-task-row />
-                        <x-task-row />
+                    <div class="list-group mb-0" id="tasks-list">
+                        @foreach ($tasks as $task)
+                            <x-task-row :id="$task->id" :task="$task->task" :status="$task->status"/>
+                        @endforeach
                     </div>
                 </div>
             </div>
