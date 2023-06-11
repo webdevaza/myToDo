@@ -1,1 +1,37 @@
-console.log('helllo fro main')
+// toggle addBar and searchBar
+document.getElementById('newTask').addEventListener('click', () => {
+    document.getElementById('searchBar').hidden = true
+    document.getElementById('addBar').hidden = false
+    document.getElementById('newTask').hidden = true
+})
+document.getElementById('addTask').addEventListener('submit', () => {
+    document.getElementById('searchBar').hidden = false
+    document.getElementById('addBar').hidden = true
+    document.getElementById('newTask').hidden = false
+})
+
+document.getElementById('cancel').addEventListener('click', () => {
+    document.getElementById('searchBar').hidden = false
+    document.getElementById('addBar').hidden = true
+    document.getElementById('newTask').hidden = false
+})
+
+
+// image validation
+document.getElementById('image').addEventListener("change", () => {
+    let fileName = document.getElementById("image").value;
+    let idxDot = fileName.lastIndexOf(".") + 1;
+    let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    
+    if ((extFile=="jpg" || extFile=="jpeg" || extFile=="png") && fileName){
+        // change file attach icon
+        document.getElementById('paperClip').hidden = true
+        document.getElementById('tick').hidden = false
+    }else{
+        fileName = null
+        document.getElementById('paperClip').hidden = false
+        document.getElementById('tick').hidden = true
+        alert("Only jpg/jpeg and png files are allowed!");
+    }
+});
+
