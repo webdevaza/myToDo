@@ -1,19 +1,20 @@
 // toggle addBar and searchBar
-document.getElementById('newTask').addEventListener('click', () => {
-    document.getElementById('searchBar').hidden = true
-    document.getElementById('addBar').hidden = false
-    document.getElementById('newTask').hidden = true
-})
-document.getElementById('addTask').addEventListener('submit', () => {
-    document.getElementById('searchBar').hidden = false
-    document.getElementById('addBar').hidden = true
-    document.getElementById('newTask').hidden = false
-})
+// document.getElementById('newTask').addEventListener('click', () => {
+//     document.getElementById('searchBar').hidden = true
+//     document.getElementById('addBar').hidden = false
+//     document.getElementById('newTask').hidden = true
+// })
+// document.getElementById('addTask').addEventListener('submit', () => {
+//     document.getElementById('searchBar').hidden = false
+//     document.getElementById('addBar').hidden = true
+//     document.getElementById('newTask').hidden = false
+// })
 
-document.getElementById('cancel').addEventListener('click', () => {
-    document.getElementById('searchBar').hidden = false
-    document.getElementById('addBar').hidden = true
-    document.getElementById('newTask').hidden = false
+document.querySelector('#cancelSearch').addEventListener('click', () => {
+    document.querySelector('#collapseSearch').classList.remove('show')
+})
+document.querySelector('#cancelAdd').addEventListener('click', () => {
+    document.querySelector('#collapseNew').classList.remove('show')
 })
 
 
