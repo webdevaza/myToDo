@@ -4,7 +4,7 @@
                 <input class="form-control m-2" name="task" type="search" placeholder="Задание" aria-label="Search">
                 <input class="form-control m-2" name="tag" type="search" placeholder="Теги" aria-label="Search">
                 <button id="search" class="btn btn-outline-dark m-2" type="submit">Поиск</button>
-                <a id="newTask" class="btn btn-outline-dark m-2" type="submit">+</a>
+                <a class="btn btn-outline-dark m-2" id="cancelSearch">Отмена</a>
         </form>
     </div>
 </nav>

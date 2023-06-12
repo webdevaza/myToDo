@@ -10,12 +10,12 @@
                 <form action="" method="POST">
                     @csrf
                     {{method_field('PUT')}}
-                    @if ($status == "no")
-                    <input class="form-check-input m-2" type="checkbox" name="input_check" aria-label="..."/>
+                    @if ($status === "yes")
+                    <input class="m-2" type="checkbox" name="input_check" aria-label="..." checked />
                     @else
-                    <input class="form-check-input m-2" type="checkbox" name="input_check" aria-label="..." checked/>
+                    <input class="m-2" type="checkbox" name="input_check" aria-label="..." />
                     @endif
-                    <s>{{$task}}</s>    
+                    <span>{{$task}}</span>    
                 </form>    
             </div>
         </div>   
@@ -25,7 +25,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
             </a>
             {{-- <button class="delete" data-id="{{ $todo->id }}" >x</button> --}}
-            <a class="delete m-2" data-id={{$id}} >
+            <a class="delete m-2" data-id={{$id}} type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </a> 
         </div> 

@@ -1,4 +1,4 @@
-<nav id="addBar" class="navbar navbar-light bg-light" hidden>
+<nav id="addBar" class="navbar navbar-light bg-light">
     <div class="container-fluid justify-content-center">
         <form id="add-form" method="POST">
             <div id="addTask" class="d-flex aligns-items-center justify-content-center flex-wrap m-2">
@@ -18,7 +18,7 @@
                     <input class="form-control form-control-sm" id="image" name="image" type="file" style="display:none">
                 </div>
                 <button class="btn btn-outline-dark m-2" type="submit">Добавить</button>
-                <a id="cancel" class="btn btn-outline-dark m-2">Отмена</a>
+                <a class="btn btn-outline-dark m-2" id="cancelAdd">Отмена</a>
             </div>
         </form>
     </div>
