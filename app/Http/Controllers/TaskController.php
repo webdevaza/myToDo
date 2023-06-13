@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -21,6 +23,16 @@ class TaskController extends Controller
             'image' => 'nullable',
         ]);
 
+        if($request->hasFile('image')) {
+            if (Str::contains($request->file('image')->store(), ['.jpg', '.jpeg', '.png', '.gif'])) {
+                $request->file('image')->store('images', 'public');
+                $taskFromBlade['image'] = $request->file('image')->store();
+            } else {
+                $taskFromBlade['image'] = 'no-image.jpg';
+            }
+        }
+        
+
         $taskFromBlade['user_id']= auth()->user()->id;
 
         $task = Task::create($taskFromBlade);
@@ -33,9 +45,15 @@ class TaskController extends Controller
     }
 
     public function destroy($id) {
-        Task::find($id)->delete($id);
+        $task = Task::find($id);
 
-        return response()->json([]);
+        $task->delete($id);
+
+        if ($task->image !== 'no-image.jpg') {
+            Storage::disk('public')->delete('images/'.$task->image);
+        }
+
+        return response()->json($task->image);
     }
 
 }

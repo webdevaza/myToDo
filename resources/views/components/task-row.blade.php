@@ -2,8 +2,8 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
             <div class="flex-shrink-0">
-                <a href="https://images.unsplash.com/photo-1685768381606-e7e9ca5d2032?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1428&q=80" target="_blank">
-                    <img src="https://images.unsplash.com/photo-1685768381606-e7e9ca5d2032?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1428&q=80" width="150" height="150">
+                <a href="{{$image == 'no-image.jpg' ? asset('no-image.jpg') : asset('storage/images/'.$image)}}" target="_blank">
+                    <img src="{{$image == 'no-image.jpg' ? asset('no-image.jpg') : asset('storage/images/'.$image)}}" width="150" height="150">
                 </a>
             </div>
             <div class="flex-grow-1 ms-3">

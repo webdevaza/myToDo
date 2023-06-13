@@ -9,14 +9,18 @@ $(document).ready(function(){
     // add task
     $('#add-form').submit(function(event) {
         event.preventDefault();
-        let formData = $(this).serialize();
+
+        let formData = new FormData(this);
         
+        if(!formData.get('image').name) formData.set('image', formData.get('image'), null)
+
         $.ajax({
             url: "tasks",
             type: 'POST',
             data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
-                
                 let tags = ''
 
                 for (let i = 0; i < 5; i++) {
@@ -25,14 +29,16 @@ $(document).ready(function(){
                             Tag ${i}
                     </a>`
                 }
+                
+                let img = response.image == 'no-image.jpg' ? `../../../${response.image}` : `storage/images/${response.image}`
 
                 let taskComponent = `
                 <div class="task-row border border-2 rounded-2 p-2 m-1">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
-                                <a href="https://images.unsplash.com/photo-1686297053585-f62dc5e887df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" target="_blank">
-                                    <img src="https://images.unsplash.com/photo-1686297053585-f62dc5e887df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" width="150" height="150">
+                                <a href="${img}" target="_blank">
+                                    <img src="${img}" width="150" height="150">
                                 </a>
                             </div>
                             <div class="flex-grow-1 ms-3">
@@ -74,7 +80,7 @@ $(document).ready(function(){
     })
 
     function removeTask (elem) {
-        console.log('working')
+        console.log('deleting')
         
         let id = $(elem).data("id");
         
@@ -87,6 +93,7 @@ $(document).ready(function(){
             },
             success: function (result){
                 $(elem).closest($('.task-row')).remove();
+                console.log(result)
             }
         });
     }
