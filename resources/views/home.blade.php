@@ -30,7 +30,7 @@
                     @endif
                     <div class="list-group mb-0" id="tasks-list">
                         @foreach ($tasks as $task)
-                            <x-task-row :id="$task->id" :task="$task->task" :status="$task->status"/>
+                            <x-task-row :id="$task->id" :task="$task->task" :status="$task->status" :image="$task->image"/>
                         @endforeach
                     </div>
                 </div>

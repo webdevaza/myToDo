@@ -29,10 +29,14 @@ document.getElementById('image').addEventListener("change", () => {
         document.getElementById('paperClip').hidden = true
         document.getElementById('tick').hidden = false
     }else{
-        fileName = null
         document.getElementById('paperClip').hidden = false
         document.getElementById('tick').hidden = true
         alert("Only jpg/jpeg and png files are allowed!");
     }
 });
+
+document.getElementById('addButton').addEventListener("click", () => {
+    document.getElementById('paperClip').hidden = false
+    document.getElementById('tick').hidden = true
+})
 

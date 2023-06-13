@@ -1,6 +1,6 @@
 <nav id="addBar" class="navbar navbar-light bg-light">
     <div class="container-fluid justify-content-center">
-        <form id="add-form" method="POST">
+        <form id="add-form" method="POST" enctype="multipart/form-data">
             <div id="addTask" class="d-flex aligns-items-center justify-content-center flex-wrap m-2">
                 <input class="form-control m-2" name="task" placeholder="Задание" required>
                 <input class="form-control m-2" name="tags" placeholder="Теги">
@@ -15,9 +15,12 @@
                             <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
                         </svg>
                     </label>
-                    <input class="form-control form-control-sm" id="image" name="image" type="file" style="display:none">
+                    <input class="form-control form-control-sm" id="image" name="image" type="file" style="display:none" value="no-image">
+                    @error('image')
+                        <p>Error</p>
+                    @enderror
                 </div>
-                <button class="btn btn-outline-dark m-2" type="submit">Добавить</button>
+                <button class="btn btn-outline-dark m-2" type="submit" id="addButton">Добавить</button>
                 <a class="btn btn-outline-dark m-2" id="cancelAdd">Отмена</a>
             </div>
         </form>
