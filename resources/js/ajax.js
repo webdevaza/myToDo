@@ -6,11 +6,10 @@ $(document).ready(function(){
         }
     });
     
-    // add task
-    $('#add-form').submit(function(event) {
-        event.preventDefault();
+    allFunctions()
 
-        let formData = new FormData(this);
+    function addTask (elem) {
+        let formData = new FormData(elem);
         
         if(!formData.get('image').name) formData.set('image', formData.get('image'), null)
 
@@ -23,10 +22,10 @@ $(document).ready(function(){
             success: function(response) {
                 let tags = ''
 
-                for (let i = 0; i < 5; i++) {
+                for (const tag of response.tags) {
                     tags += `
-                    <a class="badge bg-secondary text-wrap" href="#">
-                            Tag ${i}
+                    <a class="badge bg-secondary text-wrap" href="#" name="tag" >
+                            ${tag}
                     </a>`
                 }
                 
@@ -43,8 +42,10 @@ $(document).ready(function(){
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <form action="" method="POST">
-                                    <input class="m-2" type="checkbox" name="input_check" aria-label="..." />
-                                    <span>${response.task}</span>    
+                                    <div>
+                                        <input class="m-2 fulfil" type="checkbox" data-id=${response.id} name="input_check" />
+                                        <span>${response.task}</span>    
+                                    </div>
                                 </form>    
                             </div>
                         </div>   
@@ -65,22 +66,51 @@ $(document).ready(function(){
                 `
                 $('#tasks-list').prepend(taskComponent)
                 $('#add-form')[0].reset();
-            },
-            complete: function () {
-                $('.delete').on('click', function() {
-                    removeTask(this)
-                })
             }
         });
-    });
+    }
 
-    // delete task
-    $('.delete').on('click', function() {
-        removeTask(this)
-    })
+    function fulfilTask (elem) {
+        
+        let id = $(elem).data("id");
+
+        $.ajax(
+        {
+            url: "tasks/do/"+id,
+            type: 'PUT',
+            success: function (response){
+                
+                $(elem).closest('div').replaceWith(`
+                <div>
+                    <input class="m-2 fulfil" type="checkbox" name="input_check" data-id=${response.id} checked/>
+                    <s>${response.task}</s>
+                </div> 
+                `);
+            }
+        });
+    }
+
+    function unfulfilTask (elem) {
+        
+        let id = $(elem).data("id");
+
+        $.ajax(
+        {
+            url: "tasks/undo/"+id,
+            type: 'PUT',
+            success: function (response){
+                
+                $(elem).closest('div').replaceWith(`
+                <div>
+                    <input class="m-2 fulfil" type="checkbox" name="input_check" data-id=${response.id} />
+                    <span>${response.task}</span>
+                </div> 
+                `);
+            }
+        });
+    }
 
     function removeTask (elem) {
-        console.log('deleting')
         
         let id = $(elem).data("id");
         
@@ -91,11 +121,32 @@ $(document).ready(function(){
             data: {
                 "id": id
             },
-            success: function (result){
-                $(elem).closest($('.task-row')).remove();
-                console.log(result)
+            success: function (response){
+                $(elem).closest('.task-row').remove();
             }
         });
     }
-});
 
+    function allFunctions () {
+
+        // add task
+        $('#add-form').on('submit', function(event) {
+            event.preventDefault();
+            addTask(this)
+        });
+    
+        // fulfil and unfulfil task
+        $(document).on('click', '.fulfil', function() {
+            if (this.checked) {
+                fulfilTask(this);
+            } else {
+                unfulfilTask(this);
+            }
+        });
+
+        // delete task
+        $(document).on('click', '.delete', function() {
+            removeTask(this);
+        });
+    }
+});

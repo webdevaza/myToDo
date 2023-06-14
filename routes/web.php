@@ -28,5 +28,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Ajax routes
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
-Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
+// Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
+Route::put('/tasks/do/{id}', [TaskController::class, 'fulfil'])->name('tasks.fulfil');
+Route::put('/tasks/undo/{id}', [TaskController::class, 'unfulfil'])->name('tasks.unfulfil');
 Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
