@@ -7,15 +7,19 @@
                 </a>
             </div>
             <div class="flex-grow-1 ms-3">
-                <form action="" method="POST">
+                <form>
                     @csrf
-                    {{method_field('PUT')}}
                     @if ($status === "yes")
-                    <input class="m-2" type="checkbox" name="input_check" aria-label="..." checked />
+                    <div>
+                        <input class="m-2 fulfil" type="checkbox" name="input_check" data-id={{$id}} checked />
+                        <s>{{$task}}</s>
+                    </div>    
                     @else
-                    <input class="m-2" type="checkbox" name="input_check" aria-label="..." />
+                    <div>
+                        <input class="m-2 fulfil" type="checkbox" name="input_check" data-id={{$id}} />
+                        <span>{{$task}}</span>
+                    </div>
                     @endif
-                    <span>{{$task}}</span>    
                 </form>    
             </div>
         </div>   
@@ -31,5 +35,5 @@
         </div> 
     </div>
     <br>
-    <x-tags />
+    <x-tags :tags="$tags"/>
 </div>
