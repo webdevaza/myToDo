@@ -8,11 +8,25 @@ $(document).ready(function(){
     
     allFunctions()
 
+    // multiple tags selecting
+    let selectedTags = document.getElementById("selectedTags")
+
+    let tagsArr = Array.from(selectedTags.options)
+    let tagsStr = ''
+    selectedTags.addEventListener('change',() => {
+        tagsArr = Array.from(selectedTags.options)
+        tagsArr = tagsArr.filter(x => x.selected).map(x => x.text)
+        tagsStr = tagsArr.join(' ')
+    })
+
     function addTask (elem) {
         let formData = new FormData(elem);
-        
+
         if(!formData.get('image').name) formData.set('image', formData.get('image'), null)
 
+        if(tagsStr.length > 0) formData.set('tags', tagsStr)
+        
+        
         $.ajax({
             url: "tasks",
             type: 'POST',
@@ -20,16 +34,26 @@ $(document).ready(function(){
             processData: false,
             contentType: false,
             success: function(response) {
+
+                console.log(response[1])
+                
+                let lastNewTag = Object.values(response[1]).at(-1)
+                let addNewTag = `<option value="${lastNewTag}">${lastNewTag}</option>`
+                
+                console.log($('#selectedTags'))
+
+                $('#selectedTags').prepend(addNewTag)
+
                 let tags = ''
 
-                for (const tag of response.tags) {
+                for (const tag of response[0].tags) {
                     tags += `
                     <a class="badge bg-secondary text-wrap" href="#" name="tag" >
                             ${tag}
                     </a>`
                 }
                 
-                let img = response.image == 'no-image.jpg' ? `../../../${response.image}` : `storage/images/${response.image}`
+                let img = response[0].image == 'no-image.jpg' ? `../../../${response[0].image}` : `storage/images/${response[0].image}`
 
                 let taskComponent = `
                 <div class="task-row border border-2 rounded-2 p-2 m-1">
@@ -43,8 +67,8 @@ $(document).ready(function(){
                             <div class="flex-grow-1 ms-3">
                                 <form action="" method="POST">
                                     <div>
-                                        <input class="m-2 fulfil" type="checkbox" data-id=${response.id} name="input_check" />
-                                        <span>${response.task}</span>    
+                                        <input class="m-2 fulfil" type="checkbox" data-id=${response[0].id} name="input_check" />
+                                        <span>${response[0].task}</span>    
                                     </div>
                                 </form>    
                             </div>
@@ -53,7 +77,7 @@ $(document).ready(function(){
                             <a class="edit m-2" data-id="" >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
                             </a>
-                            <a class="delete m-2" data-id=${response.id} type="button">
+                            <a class="delete m-2" data-id=${response[0].id} type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                             </a> 
                         </div> 
