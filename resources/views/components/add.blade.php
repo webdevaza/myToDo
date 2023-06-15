@@ -2,8 +2,21 @@
     <div class="container-fluid justify-content-center">
         <form id="add-form" method="POST" enctype="multipart/form-data">
             <div id="addTask" class="d-flex aligns-items-center justify-content-center flex-wrap m-2">
-                <input class="form-control m-2" name="task" placeholder="Задание" required>
-                <input class="form-control m-2" name="tags" placeholder="Теги">
+                
+                    <input class="form-control m-2" name="task" placeholder="Задание" required autocomplete="off">
+                    <select required class="form-select w-auto" 
+                            name="tags" 
+                            id="selectedTags" 
+                            multiple data-allow-new="true"
+                            data-regex="^\w[a-zA-Z@#0-9.]*$">
+                        <option selected disabled hidden value="">Выберите или добавьте новый тег</option>
+                        @foreach ($allTags as $tag)
+                            <option value="{{$tag}}">{{$tag}}</option>
+                        @endforeach
+                    </select>
+                    
+                <div class="invalid-feedback">Please select a valid tag.</div>
+
                 <div class="m-3">
                     <label for="image" id="tick" hidden>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">

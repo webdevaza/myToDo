@@ -13,8 +13,18 @@ class TaskController extends Controller
     public function index() {
         $tasks = Task::where('user_id', Auth::id())->latest()->get();
         
-        return view('home', ['tasks' => $tasks]);
-        // return response()->json('{"id":1,"user_id":"1","task":"to do sth","status":"no","tags":"bla,dla","image":"dummy.png"}');
+        $allTags = [];
+
+        
+        foreach($tasks as $task) {
+            $tags = explode(' ',$task->tags);
+            foreach ($tags as $tag) {
+                $allTags[] = $tag;
+            }
+        }
+        $allTags = array_unique($allTags);
+
+        return view('home', ['tasks' => $tasks, 'allTags' => $allTags]);
     }
 
     public function fulfil ($id) {
@@ -38,6 +48,7 @@ class TaskController extends Controller
     }
 
     public function store(Request $request) {
+        //new task saving
         $taskFromBlade = $request->validate([
             'task' => 'required',
             'tags' => 'nullable',
@@ -53,14 +64,27 @@ class TaskController extends Controller
             }
         }
         
-
         $taskFromBlade['user_id']= auth()->user()->id;
 
         $task = Task::create($taskFromBlade);
 
         $task->tags = explode(' ', $task->tags);
 
-        return response()->json($task);
+        // retrieving all tasks
+        $DBtags = Task::select('tags')->get();
+
+        $allTags = [];
+
+        foreach($DBtags as $DBtag) {
+            $tags = explode(' ',$DBtag->tags);
+            foreach ($tags as $tag) {
+                $allTags[] = $tag;
+            }
+        }
+        $allTags = array_unique($allTags);
+
+        // sending the new task and all tags
+        return response()->json([$task, $allTags]);
     }
 
     public function update() {

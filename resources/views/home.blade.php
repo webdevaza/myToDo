@@ -18,7 +18,7 @@
                     <x-search />
                 </div>
                 <div class="collapse" id="collapseNew">
-                    <x-add />
+                    <x-add :allTags="$allTags" />
                 </div>
             </div>
             <div class="card">
